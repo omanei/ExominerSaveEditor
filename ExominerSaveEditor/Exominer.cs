@@ -14,6 +14,7 @@ namespace ExominerSaveEditor
             {
                 save = JObject.Parse((string)formatter.Deserialize(fs));
             }
+            File.Copy(pathToSave, "GameState.bak");
         }
 
         public void WriteFile() 
@@ -36,20 +37,46 @@ namespace ExominerSaveEditor
             return result;
         }
 
-        public void SetSoftCurrency(double updatedSoftCurrency)
+        public string ShowInfo() 
         {
-            save["Wallet"]["SoftCurrency"] = updatedSoftCurrency;
+            var result = string.Empty;
+            result += "Rank: " + save["Rank"] + '\n';
+            result += "Planet: " + save["Planet"] + '\n';
+            result += ShowWallet() + '\n';
+            result += "OreValue: " + save["OreValue"] + '\n';
+            result += "AlloyValue: " + save["AlloyValue"] + '\n';
+            result += "ItemsValue: " + save["ItemsValue"] + '\n';
+            result += "SmelterLevel: " + save["SmelterLevel"] + '\n';
+            result += "CrafterLevel: " + save["CrafterLevel"] + '\n';
+            result += "RemoveAds: " + save["RemoveAds"] + '\n';
+            return result;
         }
 
-        public void SetHardCurrency(double updatedSoftCurrency)
-        {
-            save["Wallet"]["HardCurrency"] = updatedSoftCurrency;
-        }
+        public void SetSoftCurrency(double updatedSoftCurrency) => save["Wallet"]["SoftCurrency"] = updatedSoftCurrency;
 
-        public void SetSciencePoints(double updatedSoftCurrency)
+        public void SetHardCurrency(double updatedHardCurrency) => save["Wallet"]["HardCurrency"] = updatedHardCurrency;
+
+        public void SetSciencePoints(double updatedSciencePoints) => save["Wallet"]["SciencePoints"] = updatedSciencePoints;
+
+        public void SetOreValue(double updateOreValue) => save["OreValue"] = updateOreValue;
+
+        public void SetAlloyValue(double updateAlloyValue) => save["AlloyValue"] = updateAlloyValue;
+
+        public void SetItemsValue(double updateItemsValue) => save["ItemsValue"] = updateItemsValue;
+
+        public void SetSmelterLevel(double updateSmelterLevel) => save["SmelterLevel"] = (int)updateSmelterLevel;
+
+        public void SetCrafterLevel(double updateCrafterLevel) => save["CrafterLevel"] = (int)updateCrafterLevel;
+
+        public void DisableAds() 
         {
-            save["Wallet"]["SciencePoints"] = updatedSoftCurrency;
+            save["Store"]["noAdsProductState"][0]["_isPurchased"] = true;
+            save["Store"]["noAdsProductState"][0]["_isSpecialOfferPurchased"] = true;
+            save["RemoveAds"] = true;
         }
+        public JToken? ShowProperty(string property) => save[property];
+
+
 
     }
 }

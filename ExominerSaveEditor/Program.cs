@@ -16,19 +16,25 @@ do
     }
 } while (string.IsNullOrEmpty(filePath) || !File.Exists(filePath));
 
-
 Exominer exominer = new(filePath);
-Console.WriteLine("Your currency:");
-Console.WriteLine(exominer.ShowWallet());
 
 int choice;
 do
 {
+    Console.WriteLine("Your save:");
+    Console.WriteLine(exominer.ShowInfo());
+    Console.WriteLine();
     Console.WriteLine("Choose an option:");
     Console.WriteLine("1. edit SoftCurrency");
     Console.WriteLine("2. edit HardCurrency");
     Console.WriteLine("3. edit SciencePoints");
-    Console.WriteLine("4. Save");
+    Console.WriteLine("4. edit OreValues");
+    Console.WriteLine("5. edit AlloyValue");
+    Console.WriteLine("6. edit ItemsValue");
+    Console.WriteLine("7. edit SmelterLevel");
+    Console.WriteLine("8. edit CrafterLevel");
+    Console.WriteLine("9. DisableAds");
+    Console.WriteLine("10. Save File");
     Console.WriteLine("0. Exit");
 
     if (!int.TryParse(Console.ReadLine(), out choice))
@@ -49,8 +55,26 @@ do
                 exominer.SetSciencePoints(ReadDoubleFromConsole("Enter a new SciencePoints value: "));
                 break;
             case 4:
+                exominer.SetOreValue(ReadDoubleFromConsole("Enter a new OreValue: "));
+                break;
+            case 5:
+                exominer.SetAlloyValue(ReadDoubleFromConsole("Enter a new AlloyValue: "));
+                break;
+            case 6:
+                exominer.SetItemsValue(ReadDoubleFromConsole("Enter a new ItemsValue: "));
+                break;
+            case 7:
+                exominer.SetSmelterLevel(ReadDoubleFromConsole("Enter a new SmelterLevel: "));
+                break;
+            case 8:
+                exominer.SetCrafterLevel(ReadDoubleFromConsole("Enter a new CrafterLevel: "));
+                break;
+            case 9:
+                exominer.DisableAds();
+                Console.WriteLine("Ads Disable!");
+                break;
+            case 10:
                 exominer.WriteFile();
-                Console.WriteLine("File save.");
                 break;
             case 0:
                 Console.WriteLine("Goodbye!");
